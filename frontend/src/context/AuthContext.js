@@ -3,6 +3,9 @@ import axios from 'axios';
 
 const AuthContext = createContext();
 
+// Get API URL from environment variable or default to localhost
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -12,7 +15,7 @@ export const AuthProvider = ({ children }) => {
   const fetchUser = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get('/api/auth/me');
+      const { data } = await axios.get(`${API_URL}/api/auth/me`);
       setUser(data);
       setError(null);
     } catch (error) {
